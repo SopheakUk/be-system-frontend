@@ -7,13 +7,23 @@ import theme from "@/theme";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   AppBar,
   Box,
+  Collapse,
+  Divider,
   Drawer,
   IconButton,
+  ListItemText,
+  ListSubheader,
+  MenuItem,
+  MenuList,
   Toolbar,
   Typography,
 } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
@@ -26,6 +36,9 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(true);
 
   const toggleDrawer = () => setOpen(!open);
+
+  const [openFruits, setOpenFruits] = useState(true);
+  const [openVeggies, setOpenVeggies] = useState(false);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -50,12 +63,36 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
         sx={{
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
+            paddingTop: "4rem",
             boxSizing: "border-box",
           },
         }}
       >
-        <Toolbar />
-        <Box sx={{ p: 2 }}>Drawer content here</Box>
+        <Box>
+          <MenuList>
+            <Accordion disableGutters>
+              <AccordionSummary expandIcon={<ExpandMore />}>
+                <Typography>User Management</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <MenuItem>Users Summary</MenuItem>
+                <MenuItem>Banana</MenuItem>
+                <MenuItem>Orange</MenuItem>
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion disableGutters>
+              <AccordionSummary expandIcon={<ExpandMore />}>
+                <Typography>Vegetables</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <MenuItem>Carrot</MenuItem>
+                <MenuItem>Broccoli</MenuItem>
+                <MenuItem>Spinach</MenuItem>
+              </AccordionDetails>
+            </Accordion>
+          </MenuList>
+        </Box>
       </Drawer>
 
       <Box

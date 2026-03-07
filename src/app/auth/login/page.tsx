@@ -8,14 +8,12 @@ import {
   TextField,
   Button,
   Box,
-  Snackbar,
-  SnackbarCloseReason,
-  Alert,
 } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { bindUrl } from "@/base/http.client";
+import AlertSnackBar from "@/app/components/AlertSnackBar";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -23,17 +21,6 @@ export default function LoginPage() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-
-  const handleClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason,
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   const handleLogin = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -121,21 +108,12 @@ export default function LoginPage() {
           </CardContent>
         </Card>
       </Box>
-      <Snackbar
+      <AlertSnackBar
         open={open}
-        autoHideDuration={5000}
-        onClose={handleClose}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
-      >
-        <Alert
-          onClose={handleClose}
-          severity="error"
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {error}
-        </Alert>
-      </Snackbar>
+        message={error}
+        severity="error"
+        onClose={() => setOpen(false)}
+      />
     </>
   );
 }
